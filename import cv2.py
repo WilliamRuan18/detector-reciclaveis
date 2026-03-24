@@ -32,16 +32,13 @@ def escrever_texto_acentuado(img, texto, posicao, cor_bgr):
 def classificar_material(objeto):
     objeto = objeto.lower()
 
-    if objeto in ["banana", "apple", "orange"]:
-        return "Orgânico", "Não reciclável"      
-
-    elif objeto in ["water_bottle", "pill_bottle", "wine_bottle", "plastic_bag"]:
+    if objeto in ["water_bottle", "pill_bottle", "wine_bottle", "plastic_bag"]:
         return "Plástico", "Reciclável"
 
     elif objeto in ["can", "tin", "beer_can", "soda_can", "screwdriver"]:
         return "Metal", "Reciclável"
     
-    elif objeto in ["paper_towel", "toilet_paper", "envelope"]:
+    elif objeto in ["paper_towel", "toilet_paper", "envelope", "toilet_tissue"]:
         return "Papel", "Reciclável"
     
     else:
