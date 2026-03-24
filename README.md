@@ -72,9 +72,3 @@ cv2.VideoCapture("http://SEU_IP:8080/video")
 * Treinar modelo próprio para resíduos recicláveis
 * Melhorar precisão da classificação
 * Criar interface gráfica
-
----
-
-## 📌 Autor
-
-Projeto desenvolvido para fins educacionais.
