@@ -1,79 +1,88 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+from PIL import Image, ImageDraw, ImageFont # Importações do Pillow
 
 # Modelo pronto
 model = tf.keras.applications.MobileNetV2(weights='imagenet')
 
-# Função de classificação de material
+# --- CONFIGURAÇÃO DA FONTE ---
+# No Windows, a Arial costuma estar neste caminho. No Linux/Mac, use o nome do arquivo .ttf
+try:
+    font_path = "arial.ttf" 
+    font = ImageFont.truetype(font_path, 25)
+except:
+    font = ImageFont.load_default()
+
+def escrever_texto_acentuado(img, texto, posicao, cor_bgr):
+    # Converte de OpenCV (BGR) para Pillow (RGB)
+    img_pil = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+    draw = ImageDraw.Draw(img_pil)
+    
+    # Inverte a cor de BGR para RGB para o Pillow
+    cor_rgb = (cor_bgr[2], cor_bgr[1], cor_bgr[0])
+    
+    # Desenha o texto com acento
+    draw.text(posicao, texto, font=font, fill=cor_rgb)
+    
+    # Converte de volta para OpenCV (BGR)
+    return cv2.cvtColor(np.array(img_pil), cv2.COLOR_RGB2BGR)
+
+# Função de classificação de material (AGORA COM ACENTOS!)
 def classificar_material(objeto):
     objeto = objeto.lower()
 
     if objeto in ["banana", "apple", "orange"]:
-        return "Orgânico", "Não reciclável"
+        return "Orgânico", "Não reciclável"      
 
-    elif objeto in ["bottle", "plastic bag"]:
+    elif objeto in ["water_bottle", "pill_bottle", "wine_bottle", "plastic_bag"]:
         return "Plástico", "Reciclável"
 
-    elif objeto in ["can"]:
+    elif objeto in ["can", "tin", "beer_can", "soda_can", "screwdriver"]:
         return "Metal", "Reciclável"
-
+    
+    elif objeto in ["paper_towel", "toilet_paper", "envelope"]:
+        return "Papel", "Reciclável"
+    
     else:
         return "Desconhecido", "Verificar"
 
-# Função que usa IA (OTIMIZADA)
+# Função que usa IA
 def detectar_objeto(frame):
-    frame_small = cv2.resize(frame, (200, 200))  # reduz processamento
-    img = cv2.resize(frame_small, (224, 224))
-
+    img = cv2.resize(frame, (224, 224))
     img = np.expand_dims(img, axis=0)
     img = tf.keras.applications.mobilenet_v2.preprocess_input(img)
-
     preds = model.predict(img, verbose=0)
     resultado = tf.keras.applications.mobilenet_v2.decode_predictions(preds, top=1)
+    return resultado[0][0][1] 
 
-    return resultado[0][0][1]
-
-# Conexão com câmera do celular
-cap = cv2.VideoCapture("http://10.122.89.224:8080/video")
-
-# Reduz buffer (menos atraso)
+# Conexão com câmera
+cap = cv2.VideoCapture("http://10.0.0.185:8080/video")
 cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
 
 frame_count = 0
-objeto = "..."
+objeto = "aguardando..." 
 
 while True:
-    # Descarta frames antigos (reduz delay)
-    for _ in range(5):
-        cap.read()
-
     ret, frame = cap.read()
     if not ret:
         break
 
     frame_count += 1
 
-    # Roda IA só a cada 30 frames (muito mais leve)
-    if frame_count % 30 == 0:
+    if frame_count % 30 == 0: 
         objeto = detectar_objeto(frame)
 
-    material, reciclavel = classificar_material(objeto)
+    material, reciclavel = classificar_material(objeto) 
 
-    # Reduz resolução para exibir mais rápido
-    frame = cv2.resize(frame, (640, 480))
+    frame_display = cv2.resize(frame, (640, 480))
 
-    # Texto na tela
-    cv2.putText(frame, f"Objeto: {objeto}", (20, 40),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,255,0), 2)
+    # USANDO PILLOW PARA OS TEXTOS (Substituindo cv2.putText)
+    frame_display = escrever_texto_acentuado(frame_display, f"Objeto: {objeto}", (20, 20), (0, 255, 0))
+    frame_display = escrever_texto_acentuado(frame_display, f"Material: {material}", (20, 60), (255, 0, 0))
+    frame_display = escrever_texto_acentuado(frame_display, f"Reciclável: {reciclavel}", (20, 100), (0, 0, 255))
 
-    cv2.putText(frame, f"Material: {material}", (20, 80),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,0,0), 2)
-
-    cv2.putText(frame, f"Reciclavel: {reciclavel}", (20, 120),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2)
-
-    cv2.imshow("Detector de Reciclavel", frame)
+    cv2.imshow("Detector de Reciclavel", frame_display)
 
     if cv2.waitKey(1) & 0xFF == 27:
         break
