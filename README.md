@@ -27,8 +27,10 @@ pip install opencv-python tensorflow numpy pillow
 
 Clone o repositório:
 
-git clone https://github.com/seu-usuario/seu-repositorio.git
-cd seu-repositorio
+Clone o repositório:
+
+git clone https://github.com/WilliamRuan18/DETEC-O-E-CLASSIFICA-O-DE-MATERIAS-.git
+cd DETEC-O-E-CLASSIFICA-O-DE-MATERIAS-
 
 Execute o script:
 
