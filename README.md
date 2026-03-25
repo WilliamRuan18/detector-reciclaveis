@@ -2,106 +2,96 @@
 
 Projeto em Python que utiliza Visão Computacional e Inteligência Artificial para identificar objetos em tempo real e classificá-los como recicláveis ou não.
 
-🚀 Funcionalidades:
-
-   📷 Captura de vídeo em tempo real (webcam/IP camera)
-   🤖 Detecção de objetos com MobileNetV2 (TensorFlow)
-   🧠 Classificação automática em:
-        Plástico
-        Metal
-        Papel
-        Orgânico
-    
+🚀 Funcionalidades
+📷 Captura de vídeo em tempo real (webcam ou IP camera)
+🤖 Detecção de objetos com MobileNetV2 (TensorFlow)
+🧠 Classificação automática em:
+Plástico
+Metal
+Papel
+Orgânico
 ♻️ Indicação se o item é reciclável ou não
-
 📝 Suporte a texto com acentos na tela usando Pillow
-
-🛠️ Tecnologias utilizadas
-    Python
-    OpenCV
-    TensorFlow / Keras
-    NumPy
-    Pillow (PIL)
-
+🛠️ Tecnologias Utilizadas
+Python
+OpenCV
+TensorFlow / Keras
+NumPy
+Pillow (PIL)
 📦 Instalação
 
 Instale as dependências com:
 
 pip install opencv-python tensorflow numpy pillow
+▶️ Como Executar
 
-▶️ Como executar
-    Clone o repositório:
-    git clone https://github.com/seu-usuario/seu-repositorio.git
-    cd seu-repositorio
-    Execute o script:
-    python main.py
+Clone o repositório:
 
-📷 Configuração da câmera
+git clone https://github.com/seu-usuario/seu-repositorio.git
+cd seu-repositorio
 
-   O código está configurado para usar uma câmera via IP:
+Execute o script:
 
-   cap = cv2.VideoCapture("http://10.0.0.185:8080/video")
+python main.py
+📷 Configuração da Câmera
 
-🔧 Você pode alterar para:
+O código está configurado para usar uma câmera via IP:
 
-   Webcam do PC:
-   cap = cv2.VideoCapture(0)
-   Outro IP de câmera:
-   cap = cv2.VideoCapture("http://SEU_IP:PORTA/video")
+cap = cv2.VideoCapture("http://10.0.0.185:8080/video")
+🔧 Outras opções:
 
-🧠 Como funciona
-  1. Captura de imagem
+Webcam do PC:
 
-  O vídeo é capturado frame a frame pela câmera.
- 
-  2. Detecção com IA
+cap = cv2.VideoCapture(0)
 
-  A cada 30 frames:
+Outro IP de câmera:
 
-  A imagem é redimensionada para 224x224
-  É processada pelo modelo MobileNetV2
-  O objeto principal é identificado
+cap = cv2.VideoCapture("http://SEU_IP:PORTA/video")
+🧠 Como Funciona
+📌 1. Captura de imagem
 
-3. Classificação de material
+O vídeo é capturado frame a frame pela câmera.
 
-Com base no objeto detectado, o sistema classifica:
+📌 2. Detecção com IA
 
- Objeto	Material	Reciclável
- Garrafa	Plástico	Sim
- Lata	Metal	Sim
- Papel	Papel	Sim
- Frutas	Orgânico	Não
+A cada 30 frames:
 
-4. Exibição na tela
+A imagem é redimensionada para 224x224
+É processada pelo modelo MobileNetV2
+O objeto principal é identificado
+📌 3. Classificação de material
 
-As informações são exibidas no vídeo:
+Com base no objeto detectado:
 
- Objeto detectado
- Tipo de material
- Se é reciclável
+Objeto	Material	Reciclável
+Garrafa	Plástico	Sim
+Lata	Metal	Sim
+Papel	Papel	Sim
+Frutas	Orgânico	Não
+📌 4. Exibição na tela
 
-✍️ Suporte a acentos
+As seguintes informações aparecem no vídeo:
 
-   O OpenCV não lida bem com acentos, então foi utilizada a biblioteca Pillow para renderizar textos corretamente:
+Objeto detectado
+Tipo de material
+Se é reciclável
+✍️ Suporte a Acentos
 
-   escrever_texto_acentuado(...)
+O OpenCV não suporta bem caracteres acentuados.
+Por isso, foi utilizada a biblioteca Pillow para renderizar textos corretamente:
 
-📁 Estrutura do projeto
-
-   📁 projeto/
-    │-- main.py
-    │-- README.md
-
+escrever_texto_acentuado(...)
+📁 Estrutura do Projeto
+📁 projeto/
+│-- main.py
+│-- README.md
 ⚠️ Limitações
-   A precisão depende do modelo MobileNetV2
-   Nem todos os objetos são reconhecidos corretamente
-   A classificação de recicláveis é baseada em regras simples (pode ser expandida)
-
-💡 Melhorias futuras:
-
-   🔍 Treinar um modelo próprio para recicláveis
-   📊 Adicionar porcentagem de confiança
-   🎯 Melhorar a classificação de materiais
-   🧠 Usar YOLO para detecção mais precisa
-  
+A precisão depende do modelo MobileNetV2
+Nem todos os objetos são reconhecidos corretamente
+A classificação de recicláveis é baseada em regras simples
+💡 Melhorias Futuras
+🔍 Treinar um modelo próprio para recicláveis
+📊 Adicionar porcentagem de confiança
+🎯 Melhorar a classificação de materiais
+🧠 Utilizar modelos mais avançados como YOLO
 
