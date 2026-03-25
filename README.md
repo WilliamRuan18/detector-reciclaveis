@@ -29,8 +29,8 @@ Clone o repositório:
 
 Clone o repositório:
 
-git clone https://github.com/WilliamRuan18/DETEC-O-E-CLASSIFICA-O-DE-MATERIAS-.git
-cd DETEC-O-E-CLASSIFICA-O-DE-MATERIAS-
+git clone https://github.com/WilliamRuan18/detector-reciclaveis.git
+cd detector-reciclaveis
 
 Execute o script:
 
