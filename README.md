@@ -1,74 +1,107 @@
-# ♻️ Detector de Recicláveis com Visão Computacional
+♻️ Detector de Recicláveis com IA
 
-Projeto em Python que utiliza **OpenCV** e **Inteligência Artificial (TensorFlow)** para identificar objetos em tempo real e classificá-los como recicláveis ou não.
+Projeto em Python que utiliza Visão Computacional e Inteligência Artificial para identificar objetos em tempo real e classificá-los como recicláveis ou não.
 
----
+🚀 Funcionalidades:
 
-## 🚀 Funcionalidades
+   📷 Captura de vídeo em tempo real (webcam/IP camera)
+   🤖 Detecção de objetos com MobileNetV2 (TensorFlow)
+   🧠 Classificação automática em:
+        Plástico
+        Metal
+        Papel
+        Orgânico
+    
+♻️ Indicação se o item é reciclável ou não
 
-* Captura de vídeo em tempo real (webcam ou celular via IP)
-* Detecção de objetos com modelo pré-treinado (MobileNetV2)
-* Classificação em:
+📝 Suporte a texto com acentos na tela usando Pillow
 
-  * Orgânico
-  * Plástico
-  * Metal
-* Indicação se o objeto é reciclável
+🛠️ Tecnologias utilizadas
+    Python
+    OpenCV
+    TensorFlow / Keras
+    NumPy
+    Pillow (PIL)
 
----
+📦 Instalação
 
-## 🛠 Tecnologias utilizadas
+Instale as dependências com:
 
-* Python
-* OpenCV
-* TensorFlow
-* NumPy
+pip install opencv-python tensorflow numpy pillow
 
----
+▶️ Como executar
+    Clone o repositório:
+    git clone https://github.com/seu-usuario/seu-repositorio.git
+    cd seu-repositorio
+    Execute o script:
+    python main.py
 
-## 📦 Instalação
+📷 Configuração da câmera
 
-Instale as dependências:
+   O código está configurado para usar uma câmera via IP:
 
-```bash
-pip install opencv-python tensorflow numpy
-```
+   cap = cv2.VideoCapture("http://10.0.0.185:8080/video")
 
----
+🔧 Você pode alterar para:
 
-## ▶️ Como executar
+   Webcam do PC:
+   cap = cv2.VideoCapture(0)
+   Outro IP de câmera:
+   cap = cv2.VideoCapture("http://SEU_IP:PORTA/video")
 
-```bash
-python main.py
-```
+🧠 Como funciona
+  1. Captura de imagem
 
----
+  O vídeo é capturado frame a frame pela câmera.
+ 
+  2. Detecção com IA
 
-## 📱 Uso com celular (IP Webcam)
+  A cada 30 frames:
 
-Você pode usar a câmera do celular com o aplicativo **IP Webcam**:
+  A imagem é redimensionada para 224x224
+  É processada pelo modelo MobileNetV2
+  O objeto principal é identificado
 
-1. Instale o app no celular
-2. Inicie o servidor
-3. Copie o endereço IP
-4. Substitua no código:
+3. Classificação de material
 
-```python
-cv2.VideoCapture("http://SEU_IP:8080/video")
-```
+Com base no objeto detectado, o sistema classifica:
 
----
+ Objeto	Material	Reciclável
+ Garrafa	Plástico	Sim
+ Lata	Metal	Sim
+ Papel	Papel	Sim
+ Frutas	Orgânico	Não
 
-## ⚠️ Limitações
+4. Exibição na tela
 
-* O modelo utilizado não foi treinado especificamente para reciclagem
-* A classificação de material é baseada em regras simples
-* Pode haver erros na identificação dos objetos
+As informações são exibidas no vídeo:
 
----
+ Objeto detectado
+ Tipo de material
+ Se é reciclável
 
-## 🚀 Melhorias futuras
+✍️ Suporte a acentos
 
-* Treinar modelo próprio para resíduos recicláveis
-* Melhorar precisão da classificação
-* Criar interface gráfica
+   O OpenCV não lida bem com acentos, então foi utilizada a biblioteca Pillow para renderizar textos corretamente:
+
+   escrever_texto_acentuado(...)
+
+📁 Estrutura do projeto
+
+   📁 projeto/
+    │-- main.py
+    │-- README.md
+
+⚠️ Limitações
+   A precisão depende do modelo MobileNetV2
+   Nem todos os objetos são reconhecidos corretamente
+   A classificação de recicláveis é baseada em regras simples (pode ser expandida)
+
+💡 Melhorias futuras:
+
+   🔍 Treinar um modelo próprio para recicláveis
+   📊 Adicionar porcentagem de confiança
+   🎯 Melhorar a classificação de materiais
+   🧠 Usar YOLO para detecção mais precisa
+  
+
