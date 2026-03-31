@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 6
+names: ['Garbage_Bag', 'Glass', 'Paper_Bag', 'Pet_Bottle', 'Plastic_Bag', 'can']
+
+roboflow:
+  workspace: object-detection-cfmul
+  project: waste-detection-0momv
+  version: 7
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/object-detection-cfmul/waste-detection-0momv/dataset/7

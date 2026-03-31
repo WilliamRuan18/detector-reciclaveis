@@ -1,0 +1,12 @@
+path: C:/Users/William Ruan/Desktop/A3 (PETROS)/dataset_yolo
+train: train/images
+val: valid/images  # O erro acontecia aqui: mudamos 'val' para 'valid'
+test: test/images
+
+names:
+  0: cardboard
+  1: glass
+  2: metal
+  3: paper
+  4: plastic
+  5: trash
